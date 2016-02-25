@@ -60,6 +60,29 @@
   chown -R mysql:mysql /var/lib/mysql
   chmod -R go+rw /config
   
+  # Create event folder
+  if [ ! -d /data/events ]; then
+    echo "Create events folder"
+    mkdir /data/events
+    chown -R root:www-data /data/events
+    chmod -R go+rw /data/events
+  else
+    echo "using existing data directory"
+    chown -R root:www-data /data/events
+    chmod -R go+rw /data/events
+  fi
+  # Create data folders
+  if [ ! -d /data/images ]; then
+    echo "Create events folder"
+    mkdir /data/images
+    chown -R root:www-data /data/images
+    chmod -R go+rw /data/images
+  else
+    echo "using existing data directory"
+    chown -R root:www-data /data/events
+    chmod -R go+rw /data/events
+  fi
+  
   #Get docker env timezone and set system timezone
   echo "setting the correct local time : $TZ"
   echo $TZ > /etc/timezone
