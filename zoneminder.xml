@@ -14,7 +14,7 @@
   <Support>http://lime-technology.com/forum/index.php?topic=39413.0</Support>
   <Registry>https://hub.docker.com/r/kyis/docker-zoneminder1.29/</Registry>
   <GitHub>https://github.com/tokyis/docker-zoneminder1.29.git</GitHub>
-  <Repository>tokyis/docker-zoneminder1.29</Repository>
+  <Repository>kyis/docker-zoneminder1.29</Repository>
   <BindTime>true</BindTime>
   <Privileged>true</Privileged>
     <Networking>
