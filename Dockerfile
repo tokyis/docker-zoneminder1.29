@@ -26,11 +26,11 @@ adduser www-data video && \
 a2enmod cgi && \
 a2enconf zoneminder && \
 a2enmod rewrite && \
+echo "date.timezone = $TZ" && \
+echo "date.timezone = $TZ" >> /etc/php5/apache2/php.ini && \
 service mysql restart && \
 service apache2 restart && \
 service zoneminder start && \
-#echo "date.timezone = $TZ" >> /etc/php5/apache2/php.ini && \
-#service apache2 reload && \
 apt-get clean
 
 ADD firstrun.sh /etc/my_init.d/firstrun.sh
