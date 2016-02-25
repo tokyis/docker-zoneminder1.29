@@ -40,10 +40,10 @@ RUN chmod +x /etc/my_init.d/firstrun.sh && \
 cp /etc/apache2/conf-enabled/zoneminder.conf /etc/zm/apache.conf && \
 rm /etc/apache2/conf-enabled/zoneminder.conf && \
 ln -s /etc/zm/apache.conf /etc/apache2/conf-enabled/zoneminder.conf && \
-rm /usr/share/zoneminder/www/tools/mootools/mootools-core.js
-rm /usr/share/zoneminder/www/tools/mootools/mootools-more.js
-ln -s /usr/share/javascript/mootools/mootools.js  /usr/share/zoneminder/www/tools/mootools/mootools-core.js
-ln -s /usr/share/javascript/mootools/mootools-more.js  /usr/share/zoneminder/www/tools/mootools/mootools-more.js
+rm /usr/share/zoneminder/www/tools/mootools/mootools-core.js && \
+rm /usr/share/zoneminder/www/tools/mootools/mootools-more.js && \
+ln -s /usr/share/javascript/mootools/mootools.js  /usr/share/zoneminder/www/tools/mootools/mootools-core.js && \
+ln -s /usr/share/javascript/mootools/mootools-more.js  /usr/share/zoneminder/www/tools/mootools/mootools-more.js && \
 #adduser www-data video && \
 service apache2 restart && \
 #cd /usr/src && \
