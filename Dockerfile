@@ -1,6 +1,8 @@
-FROM phusion/baseimage:0.9.16
+FROM phusion/baseimage:0.9.18
 
-MAINTAINER aptalca
+MAINTAINER kyis
+
+ENV SHMEM="50%"
 
 VOLUME ["/config"]
 
@@ -8,44 +10,41 @@ EXPOSE 80
 
 RUN export DEBCONF_NONINTERACTIVE_SEEN=true DEBIAN_FRONTEND=noninteractive && \
 apt-get update && \
-apt-get install -y \
-software-properties-common \
-python-software-properties && \
+apt-get upgrade && \
 add-apt-repository -y ppa:iconnor/zoneminder && \
 apt-get update && \
-apt-get install -y \
-wget \
-apache2 \
-mysql-server \
-php5 \
-libapache2-mod-php5 \
-usbutils && \
-service apache2 restart && \
-service mysql restart && \
-apt-get install -y \
-zoneminder \
-libvlc-dev \
-libvlccore-dev vlc && \
+apt-get install -y zoneminder php5-gd && \
+apt-get install -y libvlc-dev libvlccore-dev vlc && \
+service mysql start && \
+mysql -uroot < /usr/share/zoneminder/db/zm_create.sql && \
+mysql -uroot -e "grant all on zm.* to 'zmuser'@localhost identified by 'zmpass';" && \
+mysqladmin -uroot reload && \
+chmod 740 /etc/zm/zm.conf && \
+chown root:www-data /etc/zm/zm.conf && \
+sed -i '25i\        sleep 15' /etc/init.d/zoneminder && \
+adduser www-data video && \
 a2enmod cgi && \
-service apache2 restart && \
+a2enconf zoneminder && \
+a2enmod rewrite && \
 service mysql restart && \
-rm -r /etc/init.d/zoneminder && \
-mkdir -p /etc/my_init.d
+service apache2 restart && \
+service zoneminder start && \
+#echo "date.timezone = $TZ" >> /etc/php5/apache2/php.ini && \
+#service apache2 reload && \
+apt-get clean
 
-ADD zoneminder /etc/init.d/zoneminder
 ADD firstrun.sh /etc/my_init.d/firstrun.sh
 
-RUN chmod +x /etc/init.d/zoneminder && \
-chmod +x /etc/my_init.d/firstrun.sh && \
-mkdir /etc/apache2/conf.d && \
-ln -s /etc/zm/apache.conf /etc/apache2/conf.d/zoneminder.conf && \
+RUN chmod +x /etc/my_init.d/firstrun.sh && \
+#mkdir /etc/apache2/conf.d && \
+#ln -s /etc/zm/apache.conf /etc/apache2/conf.d/zoneminder.conf && \
 ln -s /etc/zm/apache.conf /etc/apache2/conf-enabled/zoneminder.conf && \
-adduser www-data video && \
+#adduser www-data video && \
 service apache2 restart && \
-cd /usr/src && \
-wget http://www.charliemouse.com:8080/code/cambozola/cambozola-0.936.tar.gz && \
-tar -xzvf cambozola-0.936.tar.gz && \
-cp cambozola-0.936/dist/cambozola.jar /usr/share/zoneminder && \
+#cd /usr/src && \
+#wget http://www.charliemouse.com:8080/code/cambozola/cambozola-0.936.tar.gz && \
+#tar -xzvf cambozola-0.936.tar.gz && \
+#cp cambozola-0.936/dist/cambozola.jar /usr/share/zoneminder && \
 cp /etc/zm/apache.conf /root/apache.conf && \
 cp /etc/zm/zm.conf /root/zm.conf && \
 update-rc.d -f apache2 remove && \
