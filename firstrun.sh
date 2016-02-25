@@ -61,15 +61,15 @@
   chmod -R go+rw /config
   
   #Get docker env timezone and set system timezone
-  echo "setting the correct local time"
+  echo "setting the correct local time : $TZ"
   echo $TZ > /etc/timezone
   export DEBCONF_NONINTERACTIVE_SEEN=true DEBIAN_FRONTEND=noninteractive
   dpkg-reconfigure tzdata
   
   #fix memory issue
-  echo "increasing shared memory"
+  echo "setting shared memory : $SHMEM of $MEM"
   umount /dev/shm
-  mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=${MEM:-4096M} tmpfs /dev/shm
+  mount -t tmpfs -o rw,nosuid,nodev,noexec,relatime,size=${SHMEM} tmpfs /dev/shm
   
   echo "starting services"
   service mysql start
