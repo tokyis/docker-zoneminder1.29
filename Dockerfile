@@ -10,7 +10,7 @@ EXPOSE 80
 
 RUN export DEBCONF_NONINTERACTIVE_SEEN=true DEBIAN_FRONTEND=noninteractive && \
 apt-get update && \
-apt-get upgrade && \
+apt-get upgrade -y && \
 add-apt-repository -y ppa:iconnor/zoneminder && \
 apt-get update && \
 apt-get install -y zoneminder php5-gd && \
