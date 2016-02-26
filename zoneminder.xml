@@ -21,9 +21,9 @@
     <Mode>bridge</Mode>
     <Publish>
       <Port>
-        <HostPort></HostPort>
+        <HostPort>8080</HostPort>
         <ContainerPort>80</ContainerPort>
-        <Protocol></Protocol>
+        <Protocol>tcp</Protocol>
       </Port>
     </Publish>
   </Networking>
@@ -32,20 +32,16 @@
       <Name>SHMEM</Name>
       <Value>50%</Value>
     </Variable>
-    <Variable>
-      <Name>TZ</Name>
-      <Value>Etc/UTC</Value>
-    </Variable>
   </Environment>    
   <Data>
     <Volume>
-      <HostDir></HostDir>
+      <HostDir>/mnt/user/appdata/zoneminder</HostDir>
       <ContainerDir>/config</ContainerDir>
       <Mode>rw</Mode>
     </Volume>
     <Volume>
-      <HostDir></HostDir>
-      <ContainerDir>/data</ContainerDir>
+      <HostDir>/mnt/user/zoneminder_data</HostDir>
+      <ContainerDir>/var/cache/zoneminder</ContainerDir>
       <Mode>rw</Mode>
     </Volume>
   </Data>
