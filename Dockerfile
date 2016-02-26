@@ -2,7 +2,7 @@ FROM phusion/baseimage:0.9.18
 
 MAINTAINER kyis
 
-ENV SHMEM="50%" TZ="Europe/Paris"
+ENV SHMEM="50%" TZ="Etc/UTC"
 
 VOLUME ["/config"]
 
