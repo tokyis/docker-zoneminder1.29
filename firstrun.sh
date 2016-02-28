@@ -74,7 +74,7 @@
   echo "setting the correct timezone : $TZ"
   echo $TZ > /etc/timezone
   dpkg-reconfigure tzdata
-  sed "s|^date.timezone =.*$|date.timezone = ${TZ}|" /etc/php5/apache2/php.ini
+  sed -i "s|^date.timezone =.*$|date.timezone = ${TZ}|" /etc/php5/apache2/php.ini
   export DEBCONF_NONINTERACTIVE_SEEN=true DEBIAN_FRONTEND=noninteractive
   
   #fix memory issue
