@@ -1,18 +1,20 @@
-FROM phusion/baseimage:0.9.18
+FROM library/centos:7
 
 MAINTAINER kyis
 
-ENV DEBCONF_NONINTERACTIVE_SEEN="true" DEBIAN_FRONTEND="noninteractive" DISABLESSH="true" LC_ALL="C.UTF-8" LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8"
-ENV SHMEM="50%" TZ="Etc/UTC"
 
 VOLUME ["/config"]
 VOLUME ["/var/cache/zoneminder"]
 
 EXPOSE 80
 
-ADD install.sh /install.sh
-ADD firstrun.sh /etc/my_init.d/firstrun.sh
+RUN yum -y install wget && \
+mkdir /home/root && \
+cd /home/root && \
+wget http://zmrepo.zoneminder.com/el/7/x86_64/zmrepo-7-6.el7.centos.noarch.rpm && \
+yum -y install --nogpgcheck zmrepo-7-6.el7.centos.noarch.rpm && \
+yum -y install zoneminder && \
+yum clean
 
-RUN bash /install.sh
 
 CMD ["/sbin/my_init"]
