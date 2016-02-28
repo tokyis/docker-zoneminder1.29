@@ -17,4 +17,3 @@ yum -y install zoneminder && \
 yum clean
 
 
-CMD ["/sbin/my_init"]
