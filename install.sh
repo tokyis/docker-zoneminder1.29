@@ -17,13 +17,13 @@ service mysql stop && \
 
 chmod 740 /etc/zm/zm.conf && \
 chown root:www-data /etc/zm/zm.conf && \
-sed -i '25i\        sleep 15' /etc/init.d/zoneminder && \
+sed -i "s|^start() {$|start() {\n        sleep 15|" /etc/init.d/zoneminder && \
 adduser www-data video && \
 a2enmod cgi && \
 a2enconf zoneminder && \
 a2enmod rewrite && \
-echo "date.timezone = $TZ" && \
-echo "date.timezone = $TZ" >> /etc/php5/apache2/php.ini && \
+echo "Setting php date.timezone = $TZ" && \
+sed -i "s|^;date.timezone =.*|date.timezone = ${TZ}|" /etc/php5/apache2/php.ini && \
 service mysql restart && \
 service apache2 restart && \
 service zoneminder restart && \
