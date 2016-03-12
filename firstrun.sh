@@ -44,8 +44,6 @@
     chmod -R go+rw /var/cache/zoneminder/events
   else
     echo "using existing data directory"
-    chown -R root:www-data /var/cache/zoneminder/events
-    chmod -R go+rw /var/cache/zoneminder/events
   fi
   # Create images folder
   if [ ! -d /var/cache/zoneminder/images ]; then
@@ -55,8 +53,6 @@
     chmod -R go+rw /var/cache/zoneminder/images
   else
     echo "using existing data directory"
-    chown -R root:www-data /var/cache/zoneminder/events
-    chmod -R go+rw /var/cache/zoneminder/events
   fi
   # Create temp folder
   if [ ! -d /var/cache/zoneminder/temp ]; then
@@ -66,8 +62,6 @@
     chmod -R go+rw /var/cache/zoneminder/temp
   else
     echo "using existing data directory"
-    chown -R root:www-data /var/cache/zoneminder/temp
-    chmod -R go+rw /var/cache/zoneminder/temp
   fi
 
   #Get docker env timezone and set system timezone
